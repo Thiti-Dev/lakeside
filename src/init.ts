@@ -10,7 +10,7 @@ export async function initializeElysiaApp(app: Elysia){
     app.get("/health", () => `i'm fine`) // will be deployed to render.com, this path will be triggered by cron-job.org to keep this 24/7 awake
     app.state({prisma})
 
-
     await RouteDescriptor.start(app)
-    app.listen(3000)
+
+    app.listen(process.env.PORT ?? 3000)
 }
