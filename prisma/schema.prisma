@@ -18,6 +18,8 @@ model Envelop {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   fromWho     String   @map("from_who")
   message     String  
+  posX        Int      @map("pos_x")
+  posY        Int      @map("pos_y")
   isRead      Boolean  @map("is_read") @default(false)
   createdAt   DateTime @map("created_at") @default(now())
   updatedAt   DateTime @map("updated_at") @default(now())
