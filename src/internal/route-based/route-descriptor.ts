@@ -35,7 +35,7 @@ export class RouteDescriptor{
                         const apiPath = apiMetadata.path.startsWith("/") ? apiMetadata.path.slice(1) : apiMetadata.path
                         const elysiaHook = {...(apiMetadata.validationSchema ?? {})}
 
-                        const args = [`service/${service}/${apiPath}`, fn, elysiaHook] as Parameters<typeof app.get> // could be .get .post .any because they use the same args
+                        const args = [`service/${service}/${controllerPrefix}/${apiPath}`, fn, elysiaHook] as Parameters<typeof app.get> // could be .get .post .any because they use the same args
                         const elysiaMethod = apiMetadata.method.toLowerCase() as "get" | "post" | "patch" | "put" | "delete"
                         // patching via dynamic method with casted type like -> app[method](...args) because of the type strictness from elysia won't allow union accessing key so we'd have to cast app to any
                         (app as any)[elysiaMethod](...args) // enforce  app.get(...args) | app.post(...args) | app.patch(...args) | app.put(...args) | app.delete(...args)
