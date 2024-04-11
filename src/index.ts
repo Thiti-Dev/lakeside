@@ -1,7 +1,15 @@
 import { Elysia } from "elysia";
+import { initializeElysiaApp } from "./init";
+import { addErrorInterceptor } from "./elysia-miscs/error-handler.elysia";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+async function main() {
+  const app = new Elysia()
+  addErrorInterceptor(app)
+  await initializeElysiaApp(app)
+  console.log(
+    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  );
+}
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+
+main()
