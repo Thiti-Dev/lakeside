@@ -2,6 +2,7 @@ import Stream from '@elysiajs/stream'
 import { Envelop } from '@prisma/client'
 import { randomUUID } from 'crypto'
 import EventEmiiter from 'eventemitter3'
+import snakecaseKeys from 'snakecase-keys'
 
 export const ENVELOP_EVENTS = {
     ADD_SUBSCRIBER: "ADD_SUBSCRIBER",
@@ -31,8 +32,9 @@ EnvelopEventSource.on(ENVELOP_EVENTS.ADD_SUBSCRIBER, (uuid: string,stream: Strea
 })
 
 EnvelopEventSource.on(ENVELOP_EVENTS.BROADCAST_ENVELOP, (envelop: Envelop) => {
+    const snakecasedEnvelop = snakecaseKeys(envelop)
     for(const [_,stream] of Object.entries(envelopSSESubscribers)){
-        stream.send({newly_added_envelop: envelop})
+        stream.send({newly_added_envelop: snakecasedEnvelop})
     }
 })
 
